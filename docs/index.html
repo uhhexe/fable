@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fable — frontier habits as a Claude Code plugin</title>
+<meta name="description" content="Claude Fable 5's operating habits, packaged as a Claude Code plugin. Five skills — grill, spec, plan, review, and the full operating character — frontier-quality judgment on whatever model you're driving.">
+<meta property="og:title" content="fable — frontier habits as a Claude Code plugin">
+<meta property="og:description" content="Five skills any capable model can run: grill → spec → plan → build → review. Never build before the gate.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E8ECF2'/%3E%3Cstop offset='.4' stop-color='%23B39DDB'/%3E%3Cstop offset='.7' stop-color='%2380CBC4'/%3E%3Cstop offset='1' stop-color='%23F48FB1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='%230B0B0E'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0B0B0E; --card:rgba(20,20,28,.85); --card-hover:rgba(26,26,36,.9);
+    --text:#E4E7EE; --text-secondary:#8B8F9C; --text-muted:#6B6F7C;
+    --bone:#E8ECF2; --lav:#B39DDB; --teal:#80CBC4; --pink:#F48FB1;
+    --line:rgba(255,255,255,.06);
+    --r-card:12px; --r-pill:999px; --t:150ms ease;
+    --ease-out:cubic-bezier(.22,.9,.35,1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Space Grotesk',system-ui,sans-serif; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  ::selection { background:rgba(128,203,196,.25); }
+  .molten-text {
+    background:linear-gradient(100deg,#E8ECF2 5%,#B39DDB 30%,#80CBC4 55%,#F48FB1 75%,#E8ECF2 95%);
+    background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  @media (prefers-reduced-motion:no-preference) {
+    .molten-text { animation:chromeflow 8s linear infinite; }
+    .molten-logo { animation-duration:6s; }
+    @keyframes chromeflow { 0% { background-position:0% 0; } 100% { background-position:300% 0; } }
+    .line { display:block; overflow:hidden; }
+    .line > span { display:block; transform:translateY(112%); animation:lineup .9s var(--ease-out) forwards .15s; }
+    .line:nth-child(2) > span { animation-delay:.28s; }
+    @keyframes lineup { to { transform:none; } }
+    .fade { opacity:0; animation:fadein .8s ease forwards .7s; }
+    @keyframes fadein { to { opacity:1; } }
+    .reveal { opacity:0; transition:opacity .8s ease; }
+    .reveal.in { opacity:1; }
+    .ticker-inner { animation:tick 44s linear infinite; }
+    @keyframes tick { to { transform:translateX(-50%); } }
+  }
+  @media (prefers-reduced-motion:reduce) { .reveal { opacity:1; } }
+  .shell { max-width:1060px; margin:0 auto; padding:30px 40px 90px; }
+  header { display:flex; align-items:center; gap:26px; margin-bottom:96px; }
+  .logo { font-family:'Unbounded',sans-serif; font-weight:600; font-size:13px; letter-spacing:.06em; text-decoration:none; }
+  nav { display:flex; gap:22px; margin-left:12px; }
+  nav a { font-size:12px; color:var(--text-secondary); letter-spacing:.04em; text-decoration:none; transition:color var(--t); }
+  nav a:hover { color:var(--text); }
+  .hcta { margin-left:auto; }
+  button, .btn-p { cursor:pointer; transition:transform var(--t); }
+  button:active, .btn-p:active { transform:scale(.97); }
+  .btn-p { position:relative; overflow:hidden; display:inline-block; background:var(--bone); color:var(--bg); font-weight:600; font-size:12.5px; padding:10px 22px; border-radius:var(--r-pill); border:none; font-family:'Space Grotesk',sans-serif; text-decoration:none; }
+  .btn-p::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
+    transform:skewX(-18deg); transition:left .5s ease; }
+  .btn-p:hover::after { left:120%; }
+  .textlink { background:none; border:none; color:var(--text); font-family:'Geist Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; display:inline-flex; align-items:center; gap:8px; padding:0; text-decoration:none; }
+  .textlink svg { width:13px; height:13px; transition:transform var(--t); }
+  .textlink:hover svg { transform:translateX(4px); }
+  .hero { display:grid; grid-template-columns:150px 1fr; gap:32px; margin-bottom:84px; }
+  .rail { border-left:1px solid var(--line); padding-left:16px; font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-muted); display:flex; flex-direction:column; gap:14px; padding-top:6px; }
+  .rail .live { color:var(--teal); display:flex; align-items:center; gap:7px; }
+  .rail .live i { width:6px; height:6px; border-radius:99px; background:var(--teal); box-shadow:0 0 8px rgba(128,203,196,.8); }
+  .hero h1 { font-family:'Unbounded',sans-serif; font-size:clamp(34px,5.6vw,60px); font-weight:600; line-height:1.04; letter-spacing:-.01em; }
+  .hero .sub { color:var(--text-secondary); font-size:14.5px; line-height:1.7; margin-top:24px; max-width:470px; }
+  .hero .ctas { display:flex; gap:22px; margin-top:30px; align-items:center; flex-wrap:wrap; }
+  .ticker { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:13px 0; overflow:hidden; white-space:nowrap; margin-bottom:92px; }
+  .ticker-inner { display:inline-flex; gap:44px; }
+  .ticker span { font-family:'Geist Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-muted); }
+  .ticker b { color:var(--text); font-weight:500; }
+  .ticker em { font-style:normal; color:var(--teal); }
+  .ticker em.p { color:var(--pink); }
+  .sechead { display:flex; align-items:baseline; gap:16px; margin-bottom:8px; }
+  .sechead .mono { font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.2em; color:var(--text-muted); text-transform:uppercase; }
+  .rows { margin-bottom:96px; }
+  .row { display:grid; grid-template-columns:64px 1.1fr .9fr auto; align-items:baseline; gap:20px; padding:22px 0; border-top:1px solid var(--line); transition:padding var(--t); text-decoration:none; }
+  .row:last-child { border-bottom:1px solid var(--line); }
+  .row:hover { padding-left:10px; }
+  .row .num { font-family:'Geist Mono',monospace; font-size:11px; color:var(--text-muted); transition:color var(--t); }
+  .row:hover .num { color:var(--teal); }
+  .row .title { font-size:19px; font-weight:500; color:var(--text); letter-spacing:-.01em; }
+  .row:hover .title {
+    background:linear-gradient(100deg,#E8ECF2 5%,#B39DDB 30%,#80CBC4 55%,#F48FB1 75%,#E8ECF2 95%);
+    background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:chromeflow 4s linear infinite; }
+  .row .desc { font-size:12.5px; color:var(--text-secondary); line-height:1.5; }
+  .row .meta { font-family:'Geist Mono',monospace; font-size:10.5px; letter-spacing:.1em; color:var(--text-muted); text-transform:uppercase; white-space:nowrap; }
+  .row .meta em { font-style:normal; color:var(--teal); }
+  .band { display:grid; grid-template-columns:1.4fr 1fr; gap:60px; margin-bottom:96px; align-items:start; }
+  .band h2 { font-size:clamp(24px,3.2vw,32px); font-weight:500; line-height:1.3; letter-spacing:-.01em; }
+  .band h2 .chrome { font-family:'Unbounded',sans-serif; font-weight:600; }
+  .band .bandsub { color:var(--text-secondary); font-size:13.5px; line-height:1.7; margin-top:18px; max-width:460px; }
+  .band .specs { border-left:1px solid var(--line); padding-left:24px; }
+  .spec { padding:14px 0; border-bottom:1px solid var(--line); }
+  .spec:last-child { border-bottom:none; }
+  .spec .k { font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-muted); }
+  .spec .v { font-size:14px; margin-top:5px; line-height:1.5; }
+  .spec .v em { font-style:normal; color:var(--teal); font-family:'Geist Mono',monospace; font-size:11px; }
+  .spec .v em.p { color:var(--pink); }
+  .install { margin-bottom:96px; }
+  .install h2 { font-family:'Unbounded',sans-serif; font-size:20px; font-weight:600; margin-bottom:8px; }
+  .install .isub { color:var(--text-secondary); font-size:13px; margin-bottom:22px; }
+  .codeblock { position:relative; background:var(--card); border-radius:var(--r-card); padding:22px 24px; font-family:'Geist Mono',monospace; font-size:13px; line-height:2; color:var(--text); overflow-x:auto; }
+  .codeblock .cm { color:var(--text-muted); }
+  .copybtn { position:absolute; top:14px; right:14px; background:rgba(255,255,255,.05); border:1px solid var(--line); color:var(--text-secondary); font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:7px 13px; border-radius:8px; transition:color var(--t), border-color var(--t); }
+  .copybtn:hover { color:var(--text); border-color:rgba(255,255,255,.14); }
+  .install .after { margin-top:16px; font-size:12.5px; color:var(--text-secondary); }
+  .install .after b { color:var(--text); font-weight:500; }
+  .cta { position:relative; background:var(--card); border-radius:var(--r-card); padding:38px 40px; display:grid; grid-template-columns:1fr auto; gap:30px; align-items:center; margin-bottom:70px; }
+  .cta::before { content:""; position:absolute; inset:0; border-radius:var(--r-card); padding:1px;
+    background:linear-gradient(120deg, rgba(201,212,224,.5), rgba(179,157,219,.35), rgba(128,203,196,.35), rgba(244,143,177,.3), rgba(201,212,224,.5));
+    background-size:300% 300%;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+  @media (prefers-reduced-motion:no-preference) {
+    .cta::before { animation:slickborder 9s ease infinite; }
+    @keyframes slickborder { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+  }
+  .cta h2 { font-family:'Unbounded',sans-serif; font-size:clamp(20px,2.6vw,27px); font-weight:600; line-height:1.2; }
+  .cta p { color:var(--text-secondary); font-size:13px; margin-top:10px; }
+  footer { display:flex; align-items:center; gap:14px; border-top:1px solid var(--line); padding-top:22px; font-size:11.5px; color:var(--text-muted); flex-wrap:wrap; }
+  footer a { color:var(--text-secondary); text-decoration:none; transition:color var(--t); }
+  footer a:hover { color:var(--text); }
+  footer .sp { margin-left:auto; font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; }
+  @media (max-width:860px) {
+    .shell { padding:24px 22px 70px; }
+    .hero { grid-template-columns:1fr; } .rail { flex-direction:row; flex-wrap:wrap; border-left:none; border-top:1px solid var(--line); padding:12px 0 0; order:2; }
+    .band { grid-template-columns:1fr; gap:30px; } .cta { grid-template-columns:1fr; }
+    .row { grid-template-columns:44px 1fr; } .row .desc { grid-column:2; margin-top:2px; } .row .meta { grid-column:2; margin-top:6px; }
+    nav { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <a class="logo molten-text molten-logo" href="#">FABLE</a>
+    <nav>
+      <a href="#skills">Skills</a>
+      <a href="#method">Method</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/uhhexe/fable">GitHub</a>
+    </nav>
+    <div class="hcta"><a class="btn-p" href="#install">Install</a></div>
+  </header>
+
+  <div class="hero">
+    <div class="rail fade">
+      <span>CLAUDE CODE PLUGIN</span>
+      <span>V1.2.0 · MIT</span>
+      <span class="live"><i></i>5 SKILLS</span>
+      <span>EVAL-TESTED</span>
+    </div>
+    <div>
+      <h1>
+        <span class="line"><span>Frontier habits,</span></span>
+        <span class="line"><span><span class="molten-text">any model.</span></span></span>
+      </h1>
+      <div class="sub">In mid-2026, Claude Fable 5 shipped hundreds of merged PRs in a month of daily plan/build/review work. What made the output better wasn't raw intelligence — it was a repeatable set of operating habits. This plugin is those habits, distilled into five skills any capable model can run.</div>
+      <div class="ctas">
+        <a class="btn-p" href="#install">Install the plugin</a>
+        <a class="textlink" href="#skills">See the five skills<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker fade">
+    <div class="ticker-inner">
+      <span>GRILL → SPEC → PLAN → BUILD → REVIEW</span><span><b>NEVER BUILD</b> BEFORE THE GATE</span><span>DECISIONS LIVE <em>ON DISK</em></span><span>VERDICTS NEED <em>LIVE PROBES</em></span><span>DEGRADES <b>HONESTLY</b> ON WEAKER MODELS</span><span>NOT AN OFFICIAL <em class="p">ANTHROPIC</em> PRODUCT</span>
+      <span>GRILL → SPEC → PLAN → BUILD → REVIEW</span><span><b>NEVER BUILD</b> BEFORE THE GATE</span><span>DECISIONS LIVE <em>ON DISK</em></span><span>VERDICTS NEED <em>LIVE PROBES</em></span><span>DEGRADES <b>HONESTLY</b> ON WEAKER MODELS</span><span>NOT AN OFFICIAL <em class="p">ANTHROPIC</em> PRODUCT</span>
+    </div>
+  </div>
+
+  <section class="rows reveal" id="skills">
+    <div class="sechead"><span class="mono">01 — THE FIVE SKILLS</span></div>
+    <a class="row" href="https://github.com/uhhexe/fable/tree/main/skills/fable-mode">
+      <span class="num">001</span>
+      <span class="title">fable-mode</span>
+      <span class="desc">The full operating character — judgment, planning, orchestration, verification, output discipline. Stays on for the session.</span>
+      <span class="meta">SAY <em>"FABLE MODE"</em></span>
+    </a>
+    <a class="row" href="https://github.com/uhhexe/fable/tree/main/skills/fable-grill">
+      <span class="num">002</span>
+      <span class="title">fable-grill</span>
+      <span class="desc">Structured facilitation: the staged interrogation, the war-game, the fork batch. Always ends in a decision ledger on disk.</span>
+      <span class="meta">SAY <em>"GRILL ME"</em></span>
+    </a>
+    <a class="row" href="https://github.com/uhhexe/fable/tree/main/skills/fable-spec">
+      <span class="num">003</span>
+      <span class="title">fable-spec</span>
+      <span class="desc">The two-tier spec pipeline: intake grill → complete design spec → review package for your smartest model → ingest its replacement spec.</span>
+      <span class="meta">SAY <em>"SPEC THIS OUT"</em></span>
+    </a>
+    <a class="row" href="https://github.com/uhhexe/fable/tree/main/skills/fable-plan">
+      <span class="num">004</span>
+      <span class="title">fable-plan</span>
+      <span class="desc">A staged plan-of-record a cold session can execute: walking skeleton first, every step carries a ground-truth Verify and a scope Fence.</span>
+      <span class="meta">SAY <em>"PLAN THIS BUILD"</em></span>
+    </a>
+    <a class="row" href="https://github.com/uhhexe/fable/tree/main/skills/fable-review">
+      <span class="num">005</span>
+      <span class="title">fable-review</span>
+      <span class="desc">A verdict backed by live probes run this session — claim ladder, adversarial refutation, explicit confidence marks. Never a vibe read.</span>
+      <span class="meta">SAY <em>"IS THIS ACTUALLY DONE"</em></span>
+    </a>
+  </section>
+
+  <section class="band reveal" id="method">
+    <div>
+      <h2>Your daily model runs the skills. Your smartest model gets a paper — <span class="chrome molten-text">never a skill.</span></h2>
+      <div class="bandsub">The loop for a big idea: you and your daily model grill and draft the spec. Your smartest model reviews it and returns one complete replacement. Your daily model ingests, plans, and builds — and fable-review gates the ship. Only one model? Run the review in a fresh session at high effort and say who reviewed it. Never skip the gate silently.</div>
+    </div>
+    <div class="specs">
+      <div class="spec"><div class="k">Through-line</div><div class="v">grill → spec → plan → build → review</div></div>
+      <div class="spec"><div class="k">The hard rule</div><div class="v">Never build before the gate <em>LOCKED</em></div></div>
+      <div class="spec"><div class="k">Done means</div><div class="v">Evidence, not claims <em>LIVE PROBES</em></div></div>
+      <div class="spec"><div class="k">Weaker models</div><div class="v">Shorter and more conservative — <em class="p">NEVER BLUFFING</em></div></div>
+      <div class="spec"><div class="k">Plays with</div><div class="v">Your existing CLAUDE.md and repo rules — layers on top, never overrides</div></div>
+    </div>
+  </section>
+
+  <section class="install reveal" id="install">
+    <div class="sechead"><span class="mono">02 — INSTALL</span></div>
+    <h2>Two commands.</h2>
+    <div class="isub">With <a href="https://claude.com/claude-code" style="color:inherit;">Claude Code</a> installed:</div>
+    <div class="codeblock">
+      <button class="copybtn" id="copy">Copy</button>
+      <div id="cmds">claude plugin marketplace add uhhexe/fable<br>claude plugin install fable@fable</div>
+    </div>
+    <div class="after">Then start a new session and say <b>"fable mode"</b> to check it's live. Update later with <b>claude plugin update fable@fable</b>. Inside a session, <b>/plugin marketplace add uhhexe/fable</b> works too.</div>
+  </section>
+
+  <section class="cta reveal">
+    <div>
+      <h2>Never build before <span class="molten-text">the gate.</span></h2>
+      <p>MIT licensed. The plugin's own design spec was written with its own pipeline — read docs/SPEC.md.</p>
+    </div>
+    <a class="btn-p" href="https://github.com/uhhexe/fable">View on GitHub</a>
+  </section>
+
+  <footer class="reveal">
+    <span>fable · MIT</span>
+    <a href="https://github.com/uhhexe/fable">github.com/uhhexe/fable</a>
+    <a href="https://github.com/uhhexe/fable/blob/main/docs/SPEC.md">design of record</a>
+    <span class="sp">"Fable" names the provenance, nothing else</span>
+  </footer>
+</div>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const btn=document.getElementById('copy');
+  btn.addEventListener('click',async()=>{
+    try { await navigator.clipboard.writeText('claude plugin marketplace add uhhexe/fable\nclaude plugin install fable@fable');
+      btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy',1600);
+    } catch(e){ btn.textContent='Select it'; setTimeout(()=>btn.textContent='Copy',1600); }
+  });
+</script>
+</body>
+</html>
