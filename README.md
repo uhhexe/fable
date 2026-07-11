@@ -7,7 +7,7 @@ Frontier-tier operating habits for Claude Code, packaged as five skills. Distill
 | Skill | Say | What you get |
 |---|---|---|
 | **fable-mode** | "fable mode" / "go fable" | The full operating character: judgment, planning, orchestration, facilitation, verification, reasoning, output discipline. Stays on for the session. |
-| **fable-plan** | "fable plan" / "plan of record" | ONE approved, goal-backward plan with machine-checkable "Done when" per task, a FENCED OUT list, and an adoption signal. Written to disk before anything gets built. |
+| **fable-plan** | "fable plan" / "plan this build" | A staged plan-of-record something that *wasn't in the room* can execute cold: walking skeleton first, every stage ends in something you can SEE, every step carries a ground-truth Verify + a scope Fence, risks get tripwires, forks above your pay grade get packaged (via fable-spec) and taken to your smartest model for the ruling. Written to disk before anything gets built. |
 | **fable-spec** | "fable spec" / "write the spec" | A self-contained handoff brief a total stranger (or a fresh session) could execute cold: Goal / Context / Key files / Constraints / Done when. |
 | **fable-review** | "fable review" / "is this actually done" | A verdict backed by live probes run this session — claim ladder, adversarial refutation, explicit confidence marks. Never a vibe read. |
 | **fable-grill** | "grill me" / "war-game this" | Structured facilitation: the grill (staged interrogation), the war-game (locked rulings R1..Rn), the fork batch (defended defaults). Always ends in a decision ledger on disk. |
