@@ -12,5 +12,8 @@
     "review",
     "facilitation",
     "frontier"
-  ]
+  ],
+  "homepage": "https://github.com/uhhexe/fable",
+  "repository": "https://github.com/uhhexe/fable",
+  "license": "MIT"
 }
