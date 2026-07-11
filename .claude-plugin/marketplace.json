@@ -1,0 +1,14 @@
+{
+  "name": "fable",
+  "description": "Frontier-tier operating habits for Claude Code — fable-mode and its four deliverable formats.",
+  "owner": {
+    "name": "Cody (uhhexe)"
+  },
+  "plugins": [
+    {
+      "name": "fable",
+      "source": "./",
+      "description": "Frontier-tier operating habits as skills: fable-mode + fable-plan, fable-spec, fable-review, fable-grill."
+    }
+  ]
+}

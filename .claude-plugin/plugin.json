@@ -1,0 +1,9 @@
+{
+  "name": "fable",
+  "version": "1.0.0",
+  "description": "Operate at frontier quality on any model: fable-mode (the full operating character) plus its four deliverable formats — fable-plan, fable-spec, fable-review, fable-grill.",
+  "author": {
+    "name": "Cody (uhhexe)"
+  },
+  "keywords": ["judgment", "planning", "verification", "review", "facilitation", "frontier"]
+}
