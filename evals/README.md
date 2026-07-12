@@ -1,5 +1,9 @@
 # evals
 
+> **Historical v1 evidence:** these prompts and results evaluated the skill under its original
+> `fable-mode` name. In fable.exe v2, that same umbrella skill ships as `fable-exe-mode`. The exact
+> prompts and result record remain unchanged so the published evidence is not rewritten after the fact.
+
 An informal, small-sample benchmark of the `fable-mode` skill against a no-skill baseline. Published
 to document the method and reported result instead of leaving the claim opaque. Raw outputs were not
 retained, so the score cannot be independently re-audited. Read the limitations before quoting it:

@@ -46,11 +46,11 @@ Expected: both JSON files parse and Claude reports validation success without wa
 - Modify: `docs/og-card.png`
 - Modify: `evals/README.md`
 
-- [ ] **Step 1: Replace active branding, URLs, commands, and skill IDs**
-- [ ] **Step 2: Add explicit v1-to-v2 migration instructions**
-- [ ] **Step 3: Label the unchanged v1 evaluation artifacts as historical**
-- [ ] **Step 4: Regenerate the Molten social card for fable.exe v2.0.0**
-- [ ] **Step 5: Verify active-copy stale-token allowlist**
+- [x] **Step 1: Replace active branding, URLs, commands, and skill IDs**
+- [x] **Step 2: Add explicit v1-to-v2 migration instructions**
+- [x] **Step 3: Label the unchanged v1 evaluation artifacts as historical**
+- [x] **Step 4: Regenerate the Molten social card for fable.exe v2.0.0**
+- [x] **Step 5: Verify active-copy stale-token allowlist**
 
 Run: `rg -n 'uhhexe/fable($|[^.])|github.io/fable/|fable@fable|skills/fable-(mode|plan|spec|review|grill|delegate)' README.md docs .claude-plugin skills`
 Expected: only intentional migration/history references remain.
