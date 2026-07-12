@@ -1,0 +1,45 @@
+{
+  "skill_name": "fable-mode",
+  "note": "The exact scenario spec run in iteration-1 (2026-07-07). Prompts are drawn verbatim from the author's real workload, so they name the author's own projects (uxe, plop, yoink, ope, latticesphere.io). They were not sanitized, so this file matches what actually produced the scores in iteration-1-results.md. Each scenario is graded against its expected_output as five pass/fail checks.",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "wargame-facilitation",
+      "prompt": "fable mode. I'm thinking about adding a 'shared clipboard history' feature to my Electron app UXE — every capture app in my suite (plop, yoink, ope) could write into one history pane. Help me war-game whether this is worth building. I want to figure out what I know, what I don't know, and what I don't know I don't know before committing. Don't build anything — this is an ideation/ruling session. Write your final ruling and analysis to a file called wargame-ruling.md in the output directory.",
+      "expected_output": "A structured war-game/facilitation document: grounds in real state or names what it would need to check, maps known-knowns / known-unknowns / unknown-knowns / unknown-unknowns explicitly (Johari), surfaces the 'biggest miss' candidate, forces a ruling with ONE recommendation rather than a neutral option menu, states load-bearing assumptions, names what it did NOT check.",
+      "checks": [
+        "Contains an explicit 4-quadrant Johari mapping with all four quadrants, including an unknown-knowns quadrant (things the operator built/decided and forgot)",
+        "Grounds in real state: cites evidence from actually probing the repos (uxe/plop/yoink/ope) OR explicitly lists the specific probes needed before ruling",
+        "Ends in ONE defended ruling/recommendation with reasoning (not a neutral menu of options)",
+        "Probes whether the capability (or most of it) already exists before proposing to build it new",
+        "Names what was NOT checked and/or states load-bearing assumptions explicitly"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "orchestration-plan",
+      "prompt": "fable mode. I have ~25 git repos under ~/Projects and I want a dead-code and stale-docs audit across all of them. I have access to cheap bulk models (GLM via API, GPT-5.5 via codex CLI) and expensive frontier judgment (you). Design the orchestration plan — who does what, how results come back, how we verify the findings aren't hallucinated, and what only I (the human) should have to look at. Don't execute it — write the plan to orchestration-plan.md in the output directory.",
+      "expected_output": "A tiered orchestration plan: bulk sweep delegated to cheap models, results returned as self-contained papers, frontier/Claude as integration+judgment point, an adversarial verification pass on load-bearing findings before anything reaches the human, session-window/wave sizing considered, human only sees judgment calls. Each stage names its verification.",
+      "checks": [
+        "Divides labor by tier: mechanical bulk sweeps delegated to cheap models, judgment/synthesis/integration retained by the frontier model",
+        "Results return as self-contained artifacts (papers) with a uniform brief format including a machine-checkable done-when",
+        "Includes a verification stage that treats returned findings as claims requiring evidence (adversarial refutation, file:line proof, or live probes) before they are trusted",
+        "The human's queue contains only final judgment calls / verdicts, not raw bulk findings",
+        "Addresses parallel-execution mechanics: lane isolation (worktrees/file ownership) and/or wave sizing relative to the session window"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "verification-judgment",
+      "prompt": "fable mode. My health-check script says my production site latticesphere.io is DOWN — it's returned FAIL 3 times in a row over 30 minutes. But I just opened the site in my browser and it loads fine, and a customer submitted a lead form 10 minutes ago. What do you make of this and what should be done? Write your analysis and recommended actions to analysis.md in the output directory. You don't have network access, so reason from the evidence given.",
+      "expected_output": "Recognizes the tool-vs-reality conflict and audits the CHECKER first (repeated unchanged negative check + contradicting lived evidence = verify the tool's own invocation before trusting it), does not recommend restarting/redeploying prod on the checker's word alone, separates CONFIRMED vs PLAUSIBLE claims, gives one clear recommended action sequence with evidence for each step, leads with the verdict.",
+      "checks": [
+        "Leads with a clear verdict in the opening lines (most likely the checker is wrong, site is up)",
+        "Identifies the health-check script itself as the prime suspect and recommends auditing the checker's own invocation/logic FIRST (repeated unchanged negative check + contradicting lived evidence)",
+        "Does NOT recommend restarting, redeploying, or otherwise mutating production as an early action",
+        "Explicitly separates confidence levels (confirmed vs plausible/speculative or equivalent labeling)",
+        "Gives an ordered action sequence that includes bypassing the checker with a raw manual equivalent (plain curl of the same endpoint) to compare results"
+      ]
+    }
+  ]
+}

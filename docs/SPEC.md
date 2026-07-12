@@ -10,7 +10,7 @@ In mid-2026 Anthropic's frontier model (Claude Fable 5) ran a heavy real-world w
 
 ## 1 · Known knowns: what this is built from
 
-- **Provenance:** distilled from heavy daily frontier-model usage on a real workload, then preserved as the `fable-mode` skill; the core skill was informally eval-tested against a no-skill baseline before packaging (15/15 vs 13/15 on judgment/orchestration/verification scenarios; suite not yet published).
+- **Provenance:** distilled from heavy daily frontier-model usage on a real workload, then preserved as the `fable-mode` skill; the core skill was informally eval-tested against a no-skill baseline before packaging (three scenarios, 15 rubric checks, 15/15 with the skill vs 13/15 without, one run on one model with automated grading). Spec, graded results, and limitations: [../evals/](../evals/). Treat it as the author's small-sample benchmark, not a proven result.
 - **The decomposition:** one umbrella skill (the operating character) plus five deliverable formats broken out so each is independently invocable. Four were originally sections inside the umbrella; users reached for them by name, so they became skills. The fifth (`fable-delegate`, v1.3.0) was added from field evidence: two weeks of real usage showed 58 model-boundary crossings whose failures clustered at the crossing itself, which no existing skill owned.
 - **The two-tier insight:** the highest-leverage workflow is not "run everything on the smartest model" but *daily model extracts and drafts; smartest model rules and finalizes; nothing gets built from an unreviewed spec.* The plugin encodes that round-trip explicitly (`fable-spec`).
 
