@@ -1,7 +1,7 @@
 {
   "name": "fable",
   "version": "1.3.0",
-  "description": "Operate at frontier quality on any model: fable-mode (the full operating character) plus its five deliverable formats — fable-plan, fable-spec, fable-review, fable-grill, fable-delegate. Not an official Anthropic product; Fable names the provenance.",
+  "description": "Operate at frontier quality on any model: fable-mode (the full operating character) plus its five deliverable formats: fable-plan, fable-spec, fable-review, fable-grill, fable-delegate. Not an official Anthropic product; Fable names the provenance.",
   "author": {
     "name": "Cody (uhhexe)"
   },
