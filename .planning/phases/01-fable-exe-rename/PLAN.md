@@ -60,10 +60,10 @@ Expected: only intentional migration/history references remain.
 **Files:**
 - Test: repository root and `docs/index.html`
 
-- [ ] **Step 1: Run plugin validation and a disposable local install**
-- [ ] **Step 2: Confirm all six `fable-exe-*` skills are installed**
-- [ ] **Step 3: Browser-check desktop, mobile, copy command, console, and overflow**
-- [ ] **Step 4: Commit the verified release candidate**
+- [x] **Step 1: Run plugin validation and a disposable local install**
+- [x] **Step 2: Confirm all six `fable-exe-*` skills are installed**
+- [x] **Step 3: Browser-check desktop, mobile, copy command, console, and overflow**
+- [x] **Step 4: Commit the verified release candidate**
 
 Run: `claude plugin validate .`
 Expected: validation succeeds with no warnings.
