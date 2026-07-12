@@ -1,6 +1,6 @@
 {
   "name": "fable",
-  "description": "Frontier-tier operating habits for Claude Code — fable-mode and its four deliverable formats.",
+  "description": "Frontier-tier operating habits for Claude Code: fable-mode and its five deliverable formats. Not an official Anthropic product; Fable names the provenance.",
   "owner": {
     "name": "Cody (uhhexe)"
   },
@@ -8,7 +8,7 @@
     {
       "name": "fable",
       "source": "./",
-      "description": "Frontier-tier operating habits as skills: fable-mode + fable-plan, fable-spec, fable-review, fable-grill."
+      "description": "Frontier-tier operating habits as skills: fable-mode + fable-plan, fable-spec, fable-review, fable-grill, fable-delegate. Not an official Anthropic product."
     }
   ]
 }
