@@ -8,14 +8,25 @@
 <meta property="og:title" content="fable · frontier habits as a Claude Code plugin">
 <meta property="og:description" content="Six skills any capable model can run: grill → spec → plan → build → review. Never build before the gate.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://uhhexe.github.io/fable/">
+<meta property="og:site_name" content="fable">
+<meta property="og:image" content="https://uhhexe.github.io/fable/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="fable: frontier habits, any model. Six skills for Claude Code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="fable · frontier habits as a Claude Code plugin">
+<meta name="twitter:description" content="Six skills any capable model can run: grill → spec → plan → build → review.">
+<meta name="twitter:image" content="https://uhhexe.github.io/fable/og-card.png">
+<meta name="twitter:image:alt" content="fable: frontier habits, any model. Six skills for Claude Code.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E8ECF2'/%3E%3Cstop offset='.4' stop-color='%23B39DDB'/%3E%3Cstop offset='.7' stop-color='%2380CBC4'/%3E%3Cstop offset='1' stop-color='%23F48FB1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='%230B0B0E'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#0B0B0E; --card:rgba(20,20,28,.85); --card-hover:rgba(26,26,36,.9);
-    --text:#E4E7EE; --text-secondary:#8B8F9C; --text-muted:#6B6F7C;
+    --text:#E4E7EE; --text-secondary:#8B8F9C; --text-muted:#787C8A;
     --bone:#E8ECF2; --lav:#B39DDB; --teal:#80CBC4; --pink:#F48FB1;
     --line:rgba(255,255,255,.06);
     --r-card:12px; --r-pill:999px; --t:150ms ease;
@@ -38,12 +49,12 @@
     @keyframes lineup { to { transform:none; } }
     .fade { opacity:0; animation:fadein .8s ease forwards .7s; }
     @keyframes fadein { to { opacity:1; } }
-    .reveal { opacity:0; transition:opacity .8s ease; }
-    .reveal.in { opacity:1; }
+    .reveal { transform:translateY(10px); transition:transform .8s var(--ease-out); }
+    .reveal.in { transform:none; }
     .ticker-inner { animation:tick 44s linear infinite; }
     @keyframes tick { to { transform:translateX(-50%); } }
   }
-  @media (prefers-reduced-motion:reduce) { .reveal { opacity:1; } }
+  @media (prefers-reduced-motion:reduce) { .reveal { transform:none; } }
   .shell { max-width:1060px; margin:0 auto; padding:30px 40px 90px; }
   header { display:flex; align-items:center; gap:26px; margin-bottom:96px; }
   .logo { font-family:'Unbounded',sans-serif; font-weight:600; font-size:13px; letter-spacing:.06em; text-decoration:none; }
@@ -52,13 +63,14 @@
   nav a:hover { color:var(--text); }
   .hcta { margin-left:auto; }
   button, .btn-p { cursor:pointer; transition:transform var(--t); }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--teal); outline-offset:4px; }
   button:active, .btn-p:active { transform:scale(.97); }
-  .btn-p { position:relative; overflow:hidden; display:inline-block; background:var(--bone); color:var(--bg); font-weight:600; font-size:12.5px; padding:10px 22px; border-radius:var(--r-pill); border:none; font-family:'Space Grotesk',sans-serif; text-decoration:none; }
+  .btn-p { position:relative; overflow:hidden; display:inline-flex; align-items:center; min-height:44px; background:var(--bone); color:var(--bg); font-weight:600; font-size:12.5px; padding:10px 22px; border-radius:var(--r-pill); border:none; font-family:'Space Grotesk',sans-serif; text-decoration:none; }
   .btn-p::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%;
     background:linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
     transform:skewX(-18deg); transition:left .5s ease; }
   .btn-p:hover::after { left:120%; }
-  .textlink { background:none; border:none; color:var(--text); font-family:'Geist Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; display:inline-flex; align-items:center; gap:8px; padding:0; text-decoration:none; }
+  .textlink { background:none; border:none; color:var(--text); font-family:'Geist Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; display:inline-flex; align-items:center; min-height:44px; gap:8px; padding:0; text-decoration:none; }
   .textlink svg { width:13px; height:13px; transition:transform var(--t); }
   .textlink:hover svg { transform:translateX(4px); }
   .hero { display:grid; grid-template-columns:150px 1fr; gap:32px; margin-bottom:84px; }
@@ -77,9 +89,9 @@
   .sechead { display:flex; align-items:baseline; gap:16px; margin-bottom:8px; }
   .sechead .mono { font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.2em; color:var(--text-muted); text-transform:uppercase; }
   .rows { margin-bottom:96px; }
-  .row { display:grid; grid-template-columns:64px 1.1fr .9fr auto; align-items:baseline; gap:20px; padding:22px 0; border-top:1px solid var(--line); transition:padding var(--t); text-decoration:none; }
+  .row { display:grid; grid-template-columns:64px 1.1fr .9fr auto; align-items:baseline; gap:20px; padding:22px 0; border-top:1px solid var(--line); transition:transform var(--t); text-decoration:none; }
   .row:last-child { border-bottom:1px solid var(--line); }
-  .row:hover { padding-left:10px; }
+  .row:hover { transform:translateX(10px); }
   .row .num { font-family:'Geist Mono',monospace; font-size:11px; color:var(--text-muted); transition:color var(--t); }
   .row:hover .num { color:var(--teal); }
   .row .title { font-size:19px; font-weight:500; color:var(--text); letter-spacing:-.01em; }
@@ -106,7 +118,7 @@
   .install .isub { color:var(--text-secondary); font-size:13px; margin-bottom:22px; }
   .codeblock { position:relative; background:var(--card); border-radius:var(--r-card); padding:22px 24px; font-family:'Geist Mono',monospace; font-size:13px; line-height:2; color:var(--text); overflow-x:auto; }
   .codeblock .cm { color:var(--text-muted); }
-  .copybtn { position:absolute; top:14px; right:14px; background:rgba(255,255,255,.05); border:1px solid var(--line); color:var(--text-secondary); font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:7px 13px; border-radius:8px; transition:color var(--t), border-color var(--t); }
+  .copybtn { position:absolute; top:10px; right:10px; min-height:44px; background:rgba(255,255,255,.05); border:1px solid var(--line); color:var(--text-secondary); font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:7px 13px; border-radius:8px; transition:color var(--t), border-color var(--t); }
   .copybtn:hover { color:var(--text); border-color:rgba(255,255,255,.14); }
   .install .after { margin-top:16px; font-size:12.5px; color:var(--text-secondary); }
   .install .after b { color:var(--text); font-weight:500; }
@@ -151,7 +163,7 @@
   <div class="hero">
     <div class="rail fade">
       <span>CLAUDE CODE PLUGIN</span>
-      <span>V1.3.0 · MIT</span>
+      <span>V1.3.1 · MIT</span>
       <span class="live"><i></i>6 SKILLS</span>
       <span>SPECCED WITH ITSELF</span>
     </div>

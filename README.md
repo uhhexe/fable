@@ -2,7 +2,7 @@
 
 **Claude Fable 5's operating habits, packaged as a Claude Code plugin: frontier-quality judgment on whatever model you're driving.**
 
-In mid-2026, Anthropic's frontier model (Claude Fable 5) ran a heavy real-world workload: hundreds of merged PRs across dozens of repos in daily plan/build/review work. What made its output distinctly better was a repeatable set of operating habits, not raw intelligence alone. This plugin is those habits, distilled into six skills any capable model can run. Before packaging, the core skill was informally eval-tested against a no-skill baseline: three judgment / orchestration / verification scenarios, 15 rubric checks, scoring 15/15 with the skill against 13/15 without. The spec, the graded results, and the honest limitations are published in [evals/](evals/); treat it as the author's small-sample benchmark, not a proven result.
+In mid-2026, Anthropic's frontier model (Claude Fable 5) ran a heavy real-world workload: hundreds of merged PRs across dozens of repos in daily plan/build/review work. What made its output distinctly better was a repeatable set of operating habits, not raw intelligence alone. This plugin is those habits, distilled into six skills any capable model can run. Before packaging, the core skill went through an informal three-scenario smoke test using 15 binary rubric checks. The method, reported results, and limitations are published in [evals/](evals/). Raw outputs were not retained, so treat it as the author's directional benchmark, not independently reproducible proof.
 
 Not an official Anthropic product. "Fable" names the provenance, nothing else.
 

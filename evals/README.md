@@ -1,8 +1,9 @@
 # evals
 
 An informal, small-sample benchmark of the `fable-mode` skill against a no-skill baseline. Published
-so the "15/15 vs 13/15" figure in the README and SPEC is inspectable rather than asserted. Read the
-limitations before quoting the number: it is the author's benchmark, not a proven result.
+to document the method and reported result instead of leaving the claim opaque. Raw outputs were not
+retained, so the score cannot be independently re-audited. Read the limitations before quoting it:
+this is the author's directional benchmark, not independently reproducible proof.
 
 ## What was measured
 
