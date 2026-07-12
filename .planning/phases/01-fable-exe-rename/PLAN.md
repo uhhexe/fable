@@ -29,10 +29,10 @@ Expected: no output.
 - Modify: `.claude-plugin/marketplace.json`
 - Rename and modify: `skills/fable-*/SKILL.md` to `skills/fable-exe-*/SKILL.md`
 
-- [ ] **Step 1: Rename the six skill directories and frontmatter identifiers**
-- [ ] **Step 2: Update active trigger phrases and sibling references**
-- [ ] **Step 3: Set plugin and marketplace version/name metadata to `fable-exe` 2.0.0**
-- [ ] **Step 4: Validate JSON and the plugin**
+- [x] **Step 1: Rename the six skill directories and frontmatter identifiers**
+- [x] **Step 2: Update active trigger phrases and sibling references**
+- [x] **Step 3: Set plugin and marketplace version/name metadata to `fable-exe` 2.0.0**
+- [x] **Step 4: Validate JSON and the plugin**
 
 Run: `python3 -m json.tool .claude-plugin/plugin.json >/dev/null && python3 -m json.tool .claude-plugin/marketplace.json >/dev/null && claude plugin validate .`
 Expected: both JSON files parse and Claude reports validation success without warnings.

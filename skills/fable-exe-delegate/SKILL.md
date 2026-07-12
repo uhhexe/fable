@@ -1,13 +1,13 @@
 ---
-name: fable-delegate
-description: Use when work is about to cross a model boundary in either direction: the user says "delegate this", "send this to my other model", "have <another assistant> do this", "farm this out", "run this on the cheap model", "get another model's take on this", or pastes back a delegate's output ("here's what it came back with", "it says it's done"). Also use when THIS session is handed a brief authored by another model or session ("another model sent this", "execute this brief"). Not for turning ideas into specs or the spec review round-trip (fable-spec), and not for in-session verdicts on finished work (fable-review).
+name: fable-exe-delegate
+description: Use when work is about to cross a model boundary in either direction: the user says "delegate this", "send this to my other model", "have <another assistant> do this", "farm this out", "run this on the cheap model", "get another model's take on this", or pastes back a delegate's output ("here's what it came back with", "it says it's done"). Also use when THIS session is handed a brief authored by another model or session ("another model sent this", "execute this brief"). Not for turning ideas into specs or the spec review round-trip (fable-exe-spec), and not for in-session verdicts on finished work (fable-exe-review).
 ---
 
-# Fable Delegate: work crossing a model boundary, both directions
+# fable.exe delegate: work crossing a model boundary, both directions
 
-You are one model in a fleet: a daily driver, a smartest model, bulk models, second-opinion models, paste-only models. Work moves between them constantly, and the failures are rarely in the content. They're in the crossing: briefs that leave with no return path and rot, bridges that drifted and fail silently, self-reported "done" integrated on trust, deliverables stranded outside the shared repo. This skill owns the crossing. **fable-spec owns what goes in the envelope; this skill owns the postal system.**
+You are one model in a fleet: a daily driver, a smartest model, bulk models, second-opinion models, paste-only models. Work moves between them constantly, and the failures are rarely in the content. They're in the crossing: briefs that leave with no return path and rot, bridges that drifted and fail silently, self-reported "done" integrated on trust, deliverables stranded outside the shared repo. This skill owns the crossing. **fable-exe-spec owns what goes in the envelope; this skill owns the postal system.**
 
-**Background:** fable-mode §3 (Orchestration), the sibling skill in this plugin; if unavailable, this file stands alone. Siblings: fable-spec provides the brief skeleton and the spec review round-trip (that round-trip is fully specified there, so don't reroute it here); fable-review is the heavy verdict when inbound stakes justify it.
+**Background:** fable-exe-mode §3 (Orchestration), the sibling skill in this plugin; if unavailable, this file stands alone. Siblings: fable-exe-spec provides the brief skeleton and the spec review round-trip (that round-trip is fully specified there, so don't reroute it here); fable-exe-review is the heavy verdict when inbound stakes justify it.
 
 ## 1 · Route: should this cross the boundary at all?
 
@@ -35,14 +35,14 @@ Three transports, in descending shared context: **subagent or fresh session** (m
 ## 3 · Outbound: the dispatch contract
 
 1. **Re-ground immediately before dispatch.** Facts move under pending artifacts: a premise written this morning can be false by afternoon. Verify the brief's premise against live state (git, the running thing), stamp it with as-of state, and check that no parallel lane already holds the work.
-2. **Package with the fable-spec handoff skeleton** (Goal / Context / Key files / Constraints / Done when), and tag every input by authority so the receiver knows what it may touch: **VERIFIED** (probed this session, evidence named) · **RULED** (operator decision: do not relitigate) · **PRIOR-REVIEW** (another model's take, overturnable with evidence) · **CLAIMED** (a self-report: plausible, not true).
+2. **Package with the fable-exe-spec handoff skeleton** (Goal / Context / Key files / Constraints / Done when), and tag every input by authority so the receiver knows what it may touch: **VERIFIED** (probed this session, evidence named) · **RULED** (operator decision: do not relitigate) · **PRIOR-REVIEW** (another model's take, overturnable with evidence) · **CLAIMED** (a self-report: plausible, not true).
 3. **Name the return path in the brief itself.** Who carries the reply back, the exact landing spot for the deliverable (a named file or branch in the shared ref), and the return shape, a paper: what was done, evidence, open items, next action. **A brief with no return path is a failed run before it leaves.**
 4. **Track the pending.** Record the dispatch durably (a pending line in the repo, or wherever the operator tracks work) with a check-by time. Past that time, silence means FAILED, not in-progress.
 
 ## 4 · Inbound: ingest, never paste-and-trust
 
 1. **Check for silent no-op and success theater first.** Does the deliverable exist where the contract said: the branch, the PR, the file? Zero output with no error is a failed dispatch that reads exactly like progress.
-2. **A returned paper is claims, not truth.** Probe the load-bearing ones yourself: re-run the tests, hit the endpoint, read the file. Any claim from the party that built the thing stays unverified until independently re-run. Stakes high? Run the full fable-review.
+2. **A returned paper is claims, not truth.** Probe the load-bearing ones yourself: re-run the tests, hit the endpoint, read the file. Any claim from the party that built the thing stays unverified until independently re-run. Stakes high? Run the full fable-exe-review.
 3. **Sort the content:** **ADOPT** (sound, fits constraints: say what changes) · **CONTEXT-BLIND MISS** (wrong because the receiver couldn't see X; name the gap in one line) · **WORTH SURFACING** (a consideration nobody had weighed, the gold of second opinions).
 4. **Land it.** Result committed to the shared ref, pending line flipped, ONE next action routed. Then report: what was delegated, what came back, what you verified versus took on trust.
 

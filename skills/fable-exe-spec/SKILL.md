@@ -1,13 +1,13 @@
 ---
-name: fable-spec
-description: Use when a big idea needs to become a complete, build-ready design spec (the user says "fable spec", "spec this out", "full spec", "run the spec pipeline") or when work must be handed to someone or something with zero context ("write the brief", "hand this off"). Also use when the user pastes back a reviewed spec from their smartest model ("here's the spec back"). That's INBOUND mode. Not for staging a finished spec into build phases (fable-plan) or verdicts on completed work (fable-review).
+name: fable-exe-spec
+description: Use when a big idea needs a complete, build-ready design spec (the user says "fable.exe spec", "fable exe spec", "spec this out", "full spec") or work must be handed to someone with zero context ("write the brief", "hand this off"). Also use when the user pastes back a reviewed spec. Not for staging a finished spec into build phases (fable-exe-plan) or verdicts on completed work (fable-exe-review).
 ---
 
-# Fable Spec: the two-tier spec pipeline (and the handoff brief)
+# fable.exe spec: the two-tier spec pipeline (and the handoff brief)
 
 Two jobs, one skill: turn a big idea into a **frontier-grade build spec** via a review round-trip, and package any work as a **self-contained paper** a stranger could execute cold. The core principle for both: **the artifact must survive outside this conversation**. No "as discussed above", no context the reader doesn't have, and always on disk the moment it exists (chat-only specs rot).
 
-**Background:** fable-mode §3 (Orchestration), the sibling skill in this plugin; if unavailable, this file stands alone. Siblings: fable-grill runs the intake; fable-plan stages the finished spec into phases; fable-delegate owns the general model-boundary crossing.
+**Background:** fable-exe-mode §3 (Orchestration), the sibling skill in this plugin; if unavailable, this file stands alone. Siblings: fable-exe-grill runs the intake; fable-exe-plan stages the finished spec into phases; fable-exe-delegate owns the general model-boundary crossing.
 
 ## The pipeline: who runs what
 
@@ -17,13 +17,13 @@ Two jobs, one skill: turn a big idea into a **frontier-grade build spec** via a 
 | 2 · Draft spec | Same session | The complete design spec, self-contained, written to disk |
 | 3 · Frontier package | Same session | A paste-ready review prompt with the contract embedded |
 | 4 · Review & finalize | **Your smartest model** (fresh session, assume no repo access) | Rules the open forks, strengthens the design, returns ONE complete replacement spec |
-| 5 · Ingest & route | Your daily model | Diff, verify claims, land the FINAL, hand to fable-plan |
+| 5 · Ingest & route | Your daily model | Diff, verify claims, land the FINAL, hand to fable-exe-plan |
 
 The smartest model never receives a skill, only the paper stage 3 emits. **Never build from the unreviewed draft; the review gate is the point.** No stronger model available? Run stage 4 in a fresh session at deliberately high effort and stamp the spec with who reviewed it. Never silently skip the gate.
 
 ### Stage 1 · Intake grill
 
-Run the fable-grill format on the idea: staged interrogation, one theme at a time, decisions read back and locked. Exit when new questions stop changing the spec.
+Run the fable-exe-grill format on the idea: staged interrogation, one theme at a time, decisions read back and locked. Exit when new questions stop changing the spec.
 
 ### Stage 2 · Draft spec
 
@@ -56,7 +56,7 @@ When the user pastes the reviewed spec back:
 1. Diff it against the draft and surface every ruling.
 2. Verify the load-bearing claims against the actual project. The reviewer had no repo access; probe what it inferred.
 3. Land the result as `…-spec-FINAL.md` next to the draft, with a one-line changelog of what the review changed.
-4. Route ONE next action, almost always fable-plan. A finished spec that just sits is a failed run.
+4. Route ONE next action, almost always fable-exe-plan. A finished spec that just sits is a failed run.
 
 ## The handoff brief (the lightweight format)
 

@@ -1,13 +1,13 @@
 ---
-name: fable-review
-description: Use when judging finished or claimed-finished work: the user says "fable review", "review of record", "is this actually done", "check this before I merge", a PR/build/paper claims completion, or output needs a verdict before it ships.
+name: fable-exe-review
+description: Use when judging finished or claimed-finished work: the user says "fable.exe review", "fable exe review", "review of record", "is this actually done", "check this before I merge", or a PR, build, or paper needs a verdict before it ships.
 ---
 
-# Fable Review: the review-of-record
+# fable.exe review: the review-of-record
 
 Produces a **verdict backed by evidence gathered this session**, never a vibe read of a diff or a summary of someone's claims. The standing doctrine: **claims are not state; only live probes are.**
 
-**Background:** fable-mode §5 (Verification) and §6 (Reasoning). This skill is those sections pointed at someone else's work. The load-bearing rules are inlined below, so this file stands alone.
+**Background:** fable-exe-mode §5 (Verification) and §6 (Reasoning). This skill is those sections pointed at someone else's work. The load-bearing rules are inlined below, so this file stands alone.
 
 ## Procedure
 
