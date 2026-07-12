@@ -1,13 +1,13 @@
 ---
-name: fable-plan
-description: Use when turning a decided goal into an executable plan: the user says "fable plan", "plan of record", "plan this build", "break this down for me", "I want to build X, where do I start", or any build too big for one sitting is about to begin without a written plan. Not for deciding WHAT to build (that's fable-grill) or for packaging finished context for handoff (that's fable-spec).
+name: fable-exe-plan
+description: Use when turning a decided goal into an executable plan: the user says "fable.exe plan", "fable exe plan", "plan of record", "plan this build", "break this down for me", or any build too big for one sitting is about to begin without a written plan. Not for deciding WHAT to build (that's fable-exe-grill) or packaging a finished handoff (that's fable-exe-spec).
 ---
 
-# Fable Plan: the staged plan-of-record
+# fable.exe plan: the staged plan-of-record
 
 The expensive part of building is the thinking, not the typing: what to build first, what to skip, what will bite later, how to know each piece works. This skill makes the smart model **do the thinking once and write it down in the repo**, so every session after (a cheaper model, a fresh context, you in a month) just follows the plan. The plan is also a gate: **never build before the operator says go on the written plan.**
 
-**Background:** fable-mode §2 (Planning). If fable-mode is not already active this session, read the fable-mode skill (the sibling skill in this plugin) §2 before step 2; if unavailable, the Method below stands alone. Sibling skills: fable-grill settles *what*; fable-spec packages a handoff; this skill answers *how*.
+**Background:** fable-exe-mode §2 (Planning). If fable-exe-mode is not already active this session, read the fable-exe-mode skill (the sibling skill in this plugin) §2 before step 2; if unavailable, the Method below stands alone. Sibling skills: fable-exe-grill settles *what*; fable-exe-spec packages a handoff; this skill answers *how*.
 
 ## The one rule: plan for a reader who can't ask you anything
 
@@ -104,7 +104,7 @@ Check boxes in the same commit that lands the work, so the plan stays the source
 
 ## Taking it up-tier
 
-When the plan hits forks above your pay grade (architecture rulings, build-vs-buy, sequencing bets), don't guess. Package the plan plus the open forks as a **fable-spec** (self-contained, no repo access assumed) and take it to the smartest model you can reach for the ruling. The executing session then stages what got settled. Cheap model plans the ground; frontier rules the forks; execution flows back down. If the model you're driving IS the smartest you can reach, don't fake the ruling: mark the fork NEEDS-OPERATOR with the exact fact or trade-off it hinges on, and get a human ruling at the gate.
+When the plan hits forks above your pay grade (architecture rulings, build-vs-buy, sequencing bets), don't guess. Package the plan plus the open forks as a **fable-exe-spec** (self-contained, no repo access assumed) and take it to the smartest model you can reach for the ruling. The executing session then stages what got settled. Cheap model plans the ground; frontier rules the forks; execution flows back down. If the model you're driving IS the smartest you can reach, don't fake the ruling: mark the fork NEEDS-OPERATOR with the exact fact or trade-off it hinges on, and get a human ruling at the gate.
 
 ## Re-ground at every stage boundary
 
