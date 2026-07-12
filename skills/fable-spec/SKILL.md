@@ -1,13 +1,13 @@
 ---
 name: fable-spec
-description: Use when a big idea needs to become a complete, build-ready design spec — the user says "fable spec", "spec this out", "full spec", "run the spec pipeline" — or when work must be handed to someone or something with zero context ("write the brief", "hand this off"). Also use when the user pastes back a reviewed spec from their smartest model ("here's the spec back") — that's INBOUND mode.
+description: Use when a big idea needs to become a complete, build-ready design spec — the user says "fable spec", "spec this out", "full spec", "run the spec pipeline" — or when work must be handed to someone or something with zero context ("write the brief", "hand this off"). Also use when the user pastes back a reviewed spec from their smartest model ("here's the spec back") — that's INBOUND mode. Not for staging a finished spec into build phases (fable-plan) or verdicts on completed work (fable-review).
 ---
 
 # Fable Spec — the two-tier spec pipeline (and the handoff brief)
 
 Two jobs, one skill: turn a big idea into a **frontier-grade build spec** via a review round-trip, and package any work as a **self-contained paper** a stranger could execute cold. The core principle for both: **the artifact must survive outside this conversation** — no "as discussed above", no context the reader doesn't have, and always on disk the moment it exists (chat-only specs rot).
 
-**REQUIRED BACKGROUND:** fable-mode §3 (Orchestration). Siblings: fable-grill runs the intake; fable-plan stages the finished spec into phases.
+**Background:** fable-mode §3 (Orchestration) — the sibling skill in this plugin; if unavailable, this file stands alone. Siblings: fable-grill runs the intake; fable-plan stages the finished spec into phases; fable-delegate owns the general model-boundary crossing.
 
 ## The pipeline — who runs what
 
@@ -45,13 +45,18 @@ Write it to the repo (`docs/plans/YYYY-MM-DD-<slug>-spec.md`) or, with no repo, 
 
 ### Stage 3 — Frontier package
 
-Emit a sibling paste-ready prompt embedding this contract, and hand both to the user:
+Emit a sibling paste-ready prompt (`…-spec-REVIEW-PROMPT.md`, same folder as the draft) embedding this contract, and hand both to the user:
 
 > You are the reviewer of record on the attached design spec. (1) Check it for coherence; flag anything unverifiable as NEEDS-PROBE rather than trusting it. (2) Rule every open fork in §5 — R1..Rn, each with the WHY. (3) Tweak, strengthen, and adjust anything needed to make this the highest-quality buildable spec — architecture, sequencing, scope, taste. (4) Return ONE COMPLETE REPLACEMENT SPEC (never a diff or commentary), same section structure, rulings applied inline plus a changelog. (5) No execution: do not write code or expand scope beyond the spec's north star.
 
 ### Stage 5 — Inbound ingest
 
-When the user pastes the reviewed spec back: diff it against the draft and surface every ruling · verify the load-bearing claims against the actual project (the reviewer had no repo access — probe what it inferred) · land the result as `…-spec-FINAL.md` next to the draft · route ONE next action, almost always fable-plan. A finished spec that just sits is a failed run.
+When the user pastes the reviewed spec back:
+
+1. Diff it against the draft and surface every ruling.
+2. Verify the load-bearing claims against the actual project — the reviewer had no repo access; probe what it inferred.
+3. Land the result as `…-spec-FINAL.md` next to the draft, with a one-line changelog of what the review changed.
+4. Route ONE next action, almost always fable-plan. A finished spec that just sits is a failed run.
 
 ## The handoff brief (the lightweight format)
 
@@ -71,5 +76,6 @@ For bigger handoffs add: mission (the larger why) · ground-truth seed (verified
 
 - The spec references "the conversation" or "as we said" — it dies outside this session.
 - Building from the draft because the review round-trip feels slow — that's the gate you're skipping.
-- A fork table with no defended defaults — you're outsourcing thinking, not requesting review.
+- A fork table with no defended defaults — you're outsourcing thinking, not requesting review. If you cannot honestly defend a default, NEEDS-YOU with the named missing fact IS the correct row — never a bluffed defense.
 - The reviewed spec comes back and only gets read, not diffed and probed.
+- The FINAL quietly reverts one of the reviewer's rulings. Rulings are inputs, not suggestions — reopen one only with new evidence, explicitly, once.

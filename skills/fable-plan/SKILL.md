@@ -1,13 +1,13 @@
 ---
 name: fable-plan
-description: Use when turning a decided goal into an executable plan — the user says "fable plan", "plan of record", "plan this build", "break this down for me", "I want to build X, where do I start", or any multi-step build is about to begin without a written plan. Not for deciding WHAT to build (that's fable-grill) or for packaging finished context for handoff (that's fable-spec).
+description: Use when turning a decided goal into an executable plan — the user says "fable plan", "plan of record", "plan this build", "break this down for me", "I want to build X, where do I start", or any build too big for one sitting is about to begin without a written plan. Not for deciding WHAT to build (that's fable-grill) or for packaging finished context for handoff (that's fable-spec).
 ---
 
 # Fable Plan — the staged plan-of-record
 
 The expensive part of building isn't the typing — it's the thinking: what to build first, what to skip, what will bite later, how to know each piece works. This skill makes the smart model **do the thinking once and write it down in the repo**, so every session after — a cheaper model, a fresh context, you in a month — just follows the plan. The plan is also a gate: **never build before the operator says go on the written plan.**
 
-**REQUIRED BACKGROUND:** fable-mode §2 (Planning). Sibling skills: fable-grill settles *what*; fable-spec packages a handoff; this skill answers *how*.
+**Background:** fable-mode §2 (Planning) — if fable-mode is not already active this session, read the fable-mode skill (the sibling skill in this plugin) §2 before step 2; if unavailable, the Method below stands alone. Sibling skills: fable-grill settles *what*; fable-spec packages a handoff; this skill answers *how*.
 
 ## The one rule: plan for a reader who can't ask you anything
 
@@ -17,7 +17,7 @@ The plan will be executed by something that wasn't in the room. Every step must 
 
 ### 1. Ground first, then ask only the questions that change the build
 
-Read the real state before planning — the repo, git status, what's deployed, what already exists (a half-build to salvage beats a greenfield). Probe every "blocker" live; a constraint you haven't probed this session is a belief. Then ask at most a handful of questions, only ones that actually alter the plan:
+Read the real state before planning — the repo, git status, what's deployed, what already exists (a half-build to salvage beats a greenfield). Probe every "blocker" live; a constraint you haven't probed this session is a belief. If you can't probe a constraint this session, don't plan on it silently — write it into Risks as `ASSUMPTION (unprobed): <belief> — verify at step N`, so the executor knows it's load-bearing and unconfirmed. Then ask at most a handful of questions, only ones that actually alter the plan:
 
 - Who is this for, and what's the smallest version genuinely useful to them?
 - What already exists? What's fixed (stack, budget, deadline) and what's open?
@@ -45,6 +45,8 @@ Steps sized for a single session, each carrying four things:
 
 Optionally tag **Who** executes each step (you / a cheap model / your smartest model) — a plan is only "think once, execute cheap" if it says who does what.
 
+Before moving on, run the reverse check: if every box gets checked, is the "done looks like" sentence from step 1 true? Task-complete ≠ goal-achieved is the most common plan failure — a gap here means a missing task, not a smaller goal.
+
 ### 5. Name the risks with tripwires
 
 The two or three most likely derailers — each with its **early-warning sign** ("if the API needs approval, you'll know at step 2, not step 9") and the fallback. A risk without a tripwire is a worry; with one, it's managed. On unfamiliar ground, the honest move is a research step, not a confident guess.
@@ -52,6 +54,10 @@ The two or three most likely derailers — each with its **early-warning sign** 
 ### 6. Write the handoff block
 
 At the top of the plan: one tight paragraph a fresh session reads first — what this is, the approach chosen and why, what's done, what's next. This is what makes the plan survive context loss.
+
+### 7. Write it to disk, then stop at the gate
+
+Write the plan per the Output contract below. Then stop. Present a one-screen summary — the stages, the risks, the rejected alternatives, the file path — and wait for an explicit go on the written plan. Do not begin stage 01 in the same message that delivers the plan.
 
 ## Output contract — write it to disk
 
@@ -98,7 +104,7 @@ Check boxes in the same commit that lands the work, so the plan stays the source
 
 ## Taking it up-tier
 
-When the plan hits forks above your pay grade — architecture rulings, build-vs-buy, sequencing bets — don't guess. Package the plan plus the open forks as a **fable-spec** (self-contained, no repo access assumed) and take it to the smartest model you can reach for the ruling. The executing session then stages what got settled. Cheap model plans the ground; frontier rules the forks; execution flows back down.
+When the plan hits forks above your pay grade — architecture rulings, build-vs-buy, sequencing bets — don't guess. Package the plan plus the open forks as a **fable-spec** (self-contained, no repo access assumed) and take it to the smartest model you can reach for the ruling. The executing session then stages what got settled. Cheap model plans the ground; frontier rules the forks; execution flows back down. If the model you're driving IS the smartest you can reach, don't fake the ruling — mark the fork NEEDS-OPERATOR with the exact fact or trade-off it hinges on, and get a human ruling at the gate.
 
 ## Re-ground at every stage boundary
 

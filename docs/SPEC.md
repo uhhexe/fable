@@ -10,8 +10,8 @@ In mid-2026 Anthropic's frontier model (Claude Fable 5) ran a heavy real-world w
 
 ## 1 · Known knowns — what this is built from
 
-- **Provenance:** distilled from a month of daily frontier-model usage on a real workload, then preserved as the `fable-mode` skill; the core skill was eval-tested against a no-skill baseline before packaging (15/15 vs 13/15 on judgment/orchestration/verification scenarios).
-- **The decomposition:** one umbrella skill (the operating character) plus four deliverable formats broken out so each is independently invocable. The formats were originally sections inside the umbrella; users reached for them by name, so they became skills.
+- **Provenance:** distilled from a month of daily frontier-model usage on a real workload, then preserved as the `fable-mode` skill; the core skill was informally eval-tested against a no-skill baseline before packaging (15/15 vs 13/15 on judgment/orchestration/verification scenarios; suite not yet published).
+- **The decomposition:** one umbrella skill (the operating character) plus five deliverable formats broken out so each is independently invocable. Four were originally sections inside the umbrella; users reached for them by name, so they became skills. The fifth (`fable-delegate`, v1.3.0) was added from field evidence: two weeks of real usage showed 58 model-boundary crossings whose failures clustered at the crossing itself, which no existing skill owned.
 - **The two-tier insight:** the highest-leverage workflow is not "run everything on the smartest model" — it's *daily model extracts and drafts; smartest model rules and finalizes; nothing gets built from an unreviewed spec.* The plugin encodes that round-trip explicitly (`fable-spec`).
 
 ## 2 · Function-by-function map
@@ -23,8 +23,9 @@ In mid-2026 Anthropic's frontier model (Claude Fable 5) ran a heavy real-world w
 | `fable-spec` | "fable spec", "spec this out", "here's the spec back" | The two-tier pipeline: intake grill → self-contained design spec → review package for your smartest model → ingest its replacement spec as the FINAL. Also the lightweight handoff-brief format |
 | `fable-plan` | "fable plan", "plan this build", "break this down" | Staged plan-of-record executable cold: walking skeleton, visible stage boundaries, Verify + Fence per step, risk tripwires, handoff block |
 | `fable-review` | "fable review", "is this actually done", pre-merge | Evidence-backed verdict: claim ladder, live probes, adversarial refutation, CONFIRMED/PLAUSIBLE/SPECULATIVE marks |
+| `fable-delegate` | "delegate this", "send this to my other model", paste-back of a delegate's output, this session receives another model's brief | The model-boundary crossing, both directions: route by role, transport-aware brief, explicit return path, inbound papers probed never trusted, attribution of who did what |
 
-The intended loop: **grill → spec → (smartest-model review) → plan → build → review.** Never build before the gate.
+The intended loop: **grill → spec → (smartest-model review) → plan → build → review.** Never build before the gate. `fable-delegate` is the lateral, not a stage — work crossing to another model at any point travels under its dispatch/ingest contract.
 
 ## 3 · Design rules (locked)
 
@@ -37,7 +38,7 @@ The intended loop: **grill → spec → (smartest-model review) → plan → bui
 
 ## 4 · Known unknowns
 
-- The four format skills inherit the umbrella's eval evidence but have not been independently baseline-tested as standalone skills.
+- The five format skills inherit the umbrella's eval evidence but have not been independently baseline-tested as standalone skills.
 - Trigger-phrase collision with users' existing skills ("grill", "spec") is untested in the wild.
 
 ## 5 · Forks — ruled
@@ -45,6 +46,7 @@ The intended loop: **grill → spec → (smartest-model review) → plan → bui
 | Fork | Ruling | Why |
 |---|---|---|
 | One plugin vs five | **One plugin, five skills** | They share one doctrine; installing partially breaks the loop |
+| Five skills vs six (v1.3.0) | **Six — `fable-delegate` added** | Two weeks of field data (58 boundary crossings, ~4/day) showed failures cluster at the crossing itself — briefs with no return path, drifted bridges, self-reports integrated on trust — and no existing skill owned it; fable-spec owns the envelope, fable-delegate owns the crossing |
 | Name: `fable-5-plugin` vs `fable` | **`fable`** | Matches plugin + marketplace name → cleanest install (`fable@fable`); "Fable 5" stays in the description as provenance |
 | Include the captured Fable 5 consumer system prompt | **Excluded** | It's a prompt dump, not the operating character; adds 117KB of no-protocol content |
 | Distribution | **Public GitHub repo as its own marketplace** | `claude plugin marketplace add uhhexe/fable` — zero packaging overhead, updates ship by push |
